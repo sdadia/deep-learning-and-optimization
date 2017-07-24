@@ -34,6 +34,8 @@ void protobuf_AssignDesc_dpl_2eproto();
 void protobuf_ShutdownFile_dpl_2eproto();
 
 class FullyConnected;
+class VectorAddition;
+class BlobProto;
 
 // ===================================================================
 
@@ -90,17 +92,24 @@ class FullyConnected : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 numOutputNeurons = 1;
+  // required int32 numoutputneurons = 1;
   inline bool has_numoutputneurons() const;
   inline void clear_numoutputneurons();
-  static const int kNumOutputNeuronsFieldNumber = 1;
+  static const int kNumoutputneuronsFieldNumber = 1;
   inline ::google::protobuf::int32 numoutputneurons() const;
   inline void set_numoutputneurons(::google::protobuf::int32 value);
 
-  // optional string name = 2;
+  // optional int32 numinputneurons = 2;
+  inline bool has_numinputneurons() const;
+  inline void clear_numinputneurons();
+  static const int kNuminputneuronsFieldNumber = 2;
+  inline ::google::protobuf::int32 numinputneurons() const;
+  inline void set_numinputneurons(::google::protobuf::int32 value);
+
+  // optional string name = 3;
   inline bool has_name() const;
   inline void clear_name();
-  static const int kNameFieldNumber = 2;
+  static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
@@ -113,6 +122,8 @@ class FullyConnected : public ::google::protobuf::Message {
  private:
   inline void set_has_numoutputneurons();
   inline void clear_has_numoutputneurons();
+  inline void set_has_numinputneurons();
+  inline void clear_has_numinputneurons();
   inline void set_has_name();
   inline void clear_has_name();
 
@@ -120,14 +131,248 @@ class FullyConnected : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* name_;
   ::google::protobuf::int32 numoutputneurons_;
+  ::google::protobuf::int32 numinputneurons_;
+  ::std::string* name_;
   friend void  protobuf_AddDesc_dpl_2eproto();
   friend void protobuf_AssignDesc_dpl_2eproto();
   friend void protobuf_ShutdownFile_dpl_2eproto();
 
   void InitAsDefaultInstance();
   static FullyConnected* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class VectorAddition : public ::google::protobuf::Message {
+ public:
+  VectorAddition();
+  virtual ~VectorAddition();
+
+  VectorAddition(const VectorAddition& from);
+
+  inline VectorAddition& operator=(const VectorAddition& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const VectorAddition& default_instance();
+
+  void Swap(VectorAddition* other);
+
+  // implements Message ----------------------------------------------
+
+  VectorAddition* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const VectorAddition& from);
+  void MergeFrom(const VectorAddition& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 numinputsvectors = 4;
+  inline bool has_numinputsvectors() const;
+  inline void clear_numinputsvectors();
+  static const int kNuminputsvectorsFieldNumber = 4;
+  inline ::google::protobuf::int32 numinputsvectors() const;
+  inline void set_numinputsvectors(::google::protobuf::int32 value);
+
+  // repeated string name = 3;
+  inline int name_size() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 3;
+  inline const ::std::string& name(int index) const;
+  inline ::std::string* mutable_name(int index);
+  inline void set_name(int index, const ::std::string& value);
+  inline void set_name(int index, const char* value);
+  inline void set_name(int index, const char* value, size_t size);
+  inline ::std::string* add_name();
+  inline void add_name(const ::std::string& value);
+  inline void add_name(const char* value);
+  inline void add_name(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& name() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_name();
+
+  // @@protoc_insertion_point(class_scope:dpl.VectorAddition)
+ private:
+  inline void set_has_numinputsvectors();
+  inline void clear_has_numinputsvectors();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> name_;
+  ::google::protobuf::int32 numinputsvectors_;
+  friend void  protobuf_AddDesc_dpl_2eproto();
+  friend void protobuf_AssignDesc_dpl_2eproto();
+  friend void protobuf_ShutdownFile_dpl_2eproto();
+
+  void InitAsDefaultInstance();
+  static VectorAddition* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class BlobProto : public ::google::protobuf::Message {
+ public:
+  BlobProto();
+  virtual ~BlobProto();
+
+  BlobProto(const BlobProto& from);
+
+  inline BlobProto& operator=(const BlobProto& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const BlobProto& default_instance();
+
+  void Swap(BlobProto* other);
+
+  // implements Message ----------------------------------------------
+
+  BlobProto* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const BlobProto& from);
+  void MergeFrom(const BlobProto& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 num = 1 [default = 0];
+  inline bool has_num() const;
+  inline void clear_num();
+  static const int kNumFieldNumber = 1;
+  inline ::google::protobuf::int32 num() const;
+  inline void set_num(::google::protobuf::int32 value);
+
+  // optional int32 channels = 2 [default = 0];
+  inline bool has_channels() const;
+  inline void clear_channels();
+  static const int kChannelsFieldNumber = 2;
+  inline ::google::protobuf::int32 channels() const;
+  inline void set_channels(::google::protobuf::int32 value);
+
+  // optional int32 height = 3 [default = 0];
+  inline bool has_height() const;
+  inline void clear_height();
+  static const int kHeightFieldNumber = 3;
+  inline ::google::protobuf::int32 height() const;
+  inline void set_height(::google::protobuf::int32 value);
+
+  // optional int32 width = 4 [default = 0];
+  inline bool has_width() const;
+  inline void clear_width();
+  static const int kWidthFieldNumber = 4;
+  inline ::google::protobuf::int32 width() const;
+  inline void set_width(::google::protobuf::int32 value);
+
+  // repeated float data = 5 [packed = true];
+  inline int data_size() const;
+  inline void clear_data();
+  static const int kDataFieldNumber = 5;
+  inline float data(int index) const;
+  inline void set_data(int index, float value);
+  inline void add_data(float value);
+  inline const ::google::protobuf::RepeatedField< float >&
+      data() const;
+  inline ::google::protobuf::RepeatedField< float >*
+      mutable_data();
+
+  // repeated float diff = 6 [packed = true];
+  inline int diff_size() const;
+  inline void clear_diff();
+  static const int kDiffFieldNumber = 6;
+  inline float diff(int index) const;
+  inline void set_diff(int index, float value);
+  inline void add_diff(float value);
+  inline const ::google::protobuf::RepeatedField< float >&
+      diff() const;
+  inline ::google::protobuf::RepeatedField< float >*
+      mutable_diff();
+
+  // @@protoc_insertion_point(class_scope:dpl.BlobProto)
+ private:
+  inline void set_has_num();
+  inline void clear_has_num();
+  inline void set_has_channels();
+  inline void clear_has_channels();
+  inline void set_has_height();
+  inline void clear_has_height();
+  inline void set_has_width();
+  inline void clear_has_width();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::int32 num_;
+  ::google::protobuf::int32 channels_;
+  ::google::protobuf::int32 height_;
+  ::google::protobuf::int32 width_;
+  ::google::protobuf::RepeatedField< float > data_;
+  mutable int _data_cached_byte_size_;
+  ::google::protobuf::RepeatedField< float > diff_;
+  mutable int _diff_cached_byte_size_;
+  friend void  protobuf_AddDesc_dpl_2eproto();
+  friend void protobuf_AssignDesc_dpl_2eproto();
+  friend void protobuf_ShutdownFile_dpl_2eproto();
+
+  void InitAsDefaultInstance();
+  static BlobProto* default_instance_;
 };
 // ===================================================================
 
@@ -136,7 +381,7 @@ class FullyConnected : public ::google::protobuf::Message {
 
 // FullyConnected
 
-// required int32 numOutputNeurons = 1;
+// required int32 numoutputneurons = 1;
 inline bool FullyConnected::has_numoutputneurons() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -151,24 +396,48 @@ inline void FullyConnected::clear_numoutputneurons() {
   clear_has_numoutputneurons();
 }
 inline ::google::protobuf::int32 FullyConnected::numoutputneurons() const {
-  // @@protoc_insertion_point(field_get:dpl.FullyConnected.numOutputNeurons)
+  // @@protoc_insertion_point(field_get:dpl.FullyConnected.numoutputneurons)
   return numoutputneurons_;
 }
 inline void FullyConnected::set_numoutputneurons(::google::protobuf::int32 value) {
   set_has_numoutputneurons();
   numoutputneurons_ = value;
-  // @@protoc_insertion_point(field_set:dpl.FullyConnected.numOutputNeurons)
+  // @@protoc_insertion_point(field_set:dpl.FullyConnected.numoutputneurons)
 }
 
-// optional string name = 2;
-inline bool FullyConnected::has_name() const {
+// optional int32 numinputneurons = 2;
+inline bool FullyConnected::has_numinputneurons() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void FullyConnected::set_has_name() {
+inline void FullyConnected::set_has_numinputneurons() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void FullyConnected::clear_has_name() {
+inline void FullyConnected::clear_has_numinputneurons() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void FullyConnected::clear_numinputneurons() {
+  numinputneurons_ = 0;
+  clear_has_numinputneurons();
+}
+inline ::google::protobuf::int32 FullyConnected::numinputneurons() const {
+  // @@protoc_insertion_point(field_get:dpl.FullyConnected.numinputneurons)
+  return numinputneurons_;
+}
+inline void FullyConnected::set_numinputneurons(::google::protobuf::int32 value) {
+  set_has_numinputneurons();
+  numinputneurons_ = value;
+  // @@protoc_insertion_point(field_set:dpl.FullyConnected.numinputneurons)
+}
+
+// optional string name = 3;
+inline bool FullyConnected::has_name() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void FullyConnected::set_has_name() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void FullyConnected::clear_has_name() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void FullyConnected::clear_name() {
   if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -234,6 +503,248 @@ inline void FullyConnected::set_allocated_name(::std::string* name) {
     name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:dpl.FullyConnected.name)
+}
+
+// -------------------------------------------------------------------
+
+// VectorAddition
+
+// required int32 numinputsvectors = 4;
+inline bool VectorAddition::has_numinputsvectors() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void VectorAddition::set_has_numinputsvectors() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void VectorAddition::clear_has_numinputsvectors() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void VectorAddition::clear_numinputsvectors() {
+  numinputsvectors_ = 0;
+  clear_has_numinputsvectors();
+}
+inline ::google::protobuf::int32 VectorAddition::numinputsvectors() const {
+  // @@protoc_insertion_point(field_get:dpl.VectorAddition.numinputsvectors)
+  return numinputsvectors_;
+}
+inline void VectorAddition::set_numinputsvectors(::google::protobuf::int32 value) {
+  set_has_numinputsvectors();
+  numinputsvectors_ = value;
+  // @@protoc_insertion_point(field_set:dpl.VectorAddition.numinputsvectors)
+}
+
+// repeated string name = 3;
+inline int VectorAddition::name_size() const {
+  return name_.size();
+}
+inline void VectorAddition::clear_name() {
+  name_.Clear();
+}
+inline const ::std::string& VectorAddition::name(int index) const {
+  // @@protoc_insertion_point(field_get:dpl.VectorAddition.name)
+  return name_.Get(index);
+}
+inline ::std::string* VectorAddition::mutable_name(int index) {
+  // @@protoc_insertion_point(field_mutable:dpl.VectorAddition.name)
+  return name_.Mutable(index);
+}
+inline void VectorAddition::set_name(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:dpl.VectorAddition.name)
+  name_.Mutable(index)->assign(value);
+}
+inline void VectorAddition::set_name(int index, const char* value) {
+  name_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:dpl.VectorAddition.name)
+}
+inline void VectorAddition::set_name(int index, const char* value, size_t size) {
+  name_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:dpl.VectorAddition.name)
+}
+inline ::std::string* VectorAddition::add_name() {
+  return name_.Add();
+}
+inline void VectorAddition::add_name(const ::std::string& value) {
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:dpl.VectorAddition.name)
+}
+inline void VectorAddition::add_name(const char* value) {
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:dpl.VectorAddition.name)
+}
+inline void VectorAddition::add_name(const char* value, size_t size) {
+  name_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:dpl.VectorAddition.name)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+VectorAddition::name() const {
+  // @@protoc_insertion_point(field_list:dpl.VectorAddition.name)
+  return name_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+VectorAddition::mutable_name() {
+  // @@protoc_insertion_point(field_mutable_list:dpl.VectorAddition.name)
+  return &name_;
+}
+
+// -------------------------------------------------------------------
+
+// BlobProto
+
+// optional int32 num = 1 [default = 0];
+inline bool BlobProto::has_num() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void BlobProto::set_has_num() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void BlobProto::clear_has_num() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void BlobProto::clear_num() {
+  num_ = 0;
+  clear_has_num();
+}
+inline ::google::protobuf::int32 BlobProto::num() const {
+  // @@protoc_insertion_point(field_get:dpl.BlobProto.num)
+  return num_;
+}
+inline void BlobProto::set_num(::google::protobuf::int32 value) {
+  set_has_num();
+  num_ = value;
+  // @@protoc_insertion_point(field_set:dpl.BlobProto.num)
+}
+
+// optional int32 channels = 2 [default = 0];
+inline bool BlobProto::has_channels() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void BlobProto::set_has_channels() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void BlobProto::clear_has_channels() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void BlobProto::clear_channels() {
+  channels_ = 0;
+  clear_has_channels();
+}
+inline ::google::protobuf::int32 BlobProto::channels() const {
+  // @@protoc_insertion_point(field_get:dpl.BlobProto.channels)
+  return channels_;
+}
+inline void BlobProto::set_channels(::google::protobuf::int32 value) {
+  set_has_channels();
+  channels_ = value;
+  // @@protoc_insertion_point(field_set:dpl.BlobProto.channels)
+}
+
+// optional int32 height = 3 [default = 0];
+inline bool BlobProto::has_height() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void BlobProto::set_has_height() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void BlobProto::clear_has_height() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void BlobProto::clear_height() {
+  height_ = 0;
+  clear_has_height();
+}
+inline ::google::protobuf::int32 BlobProto::height() const {
+  // @@protoc_insertion_point(field_get:dpl.BlobProto.height)
+  return height_;
+}
+inline void BlobProto::set_height(::google::protobuf::int32 value) {
+  set_has_height();
+  height_ = value;
+  // @@protoc_insertion_point(field_set:dpl.BlobProto.height)
+}
+
+// optional int32 width = 4 [default = 0];
+inline bool BlobProto::has_width() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void BlobProto::set_has_width() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void BlobProto::clear_has_width() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void BlobProto::clear_width() {
+  width_ = 0;
+  clear_has_width();
+}
+inline ::google::protobuf::int32 BlobProto::width() const {
+  // @@protoc_insertion_point(field_get:dpl.BlobProto.width)
+  return width_;
+}
+inline void BlobProto::set_width(::google::protobuf::int32 value) {
+  set_has_width();
+  width_ = value;
+  // @@protoc_insertion_point(field_set:dpl.BlobProto.width)
+}
+
+// repeated float data = 5 [packed = true];
+inline int BlobProto::data_size() const {
+  return data_.size();
+}
+inline void BlobProto::clear_data() {
+  data_.Clear();
+}
+inline float BlobProto::data(int index) const {
+  // @@protoc_insertion_point(field_get:dpl.BlobProto.data)
+  return data_.Get(index);
+}
+inline void BlobProto::set_data(int index, float value) {
+  data_.Set(index, value);
+  // @@protoc_insertion_point(field_set:dpl.BlobProto.data)
+}
+inline void BlobProto::add_data(float value) {
+  data_.Add(value);
+  // @@protoc_insertion_point(field_add:dpl.BlobProto.data)
+}
+inline const ::google::protobuf::RepeatedField< float >&
+BlobProto::data() const {
+  // @@protoc_insertion_point(field_list:dpl.BlobProto.data)
+  return data_;
+}
+inline ::google::protobuf::RepeatedField< float >*
+BlobProto::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:dpl.BlobProto.data)
+  return &data_;
+}
+
+// repeated float diff = 6 [packed = true];
+inline int BlobProto::diff_size() const {
+  return diff_.size();
+}
+inline void BlobProto::clear_diff() {
+  diff_.Clear();
+}
+inline float BlobProto::diff(int index) const {
+  // @@protoc_insertion_point(field_get:dpl.BlobProto.diff)
+  return diff_.Get(index);
+}
+inline void BlobProto::set_diff(int index, float value) {
+  diff_.Set(index, value);
+  // @@protoc_insertion_point(field_set:dpl.BlobProto.diff)
+}
+inline void BlobProto::add_diff(float value) {
+  diff_.Add(value);
+  // @@protoc_insertion_point(field_add:dpl.BlobProto.diff)
+}
+inline const ::google::protobuf::RepeatedField< float >&
+BlobProto::diff() const {
+  // @@protoc_insertion_point(field_list:dpl.BlobProto.diff)
+  return diff_;
+}
+inline ::google::protobuf::RepeatedField< float >*
+BlobProto::mutable_diff() {
+  // @@protoc_insertion_point(field_mutable_list:dpl.BlobProto.diff)
+  return &diff_;
 }
 
 

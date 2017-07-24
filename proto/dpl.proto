@@ -3,8 +3,28 @@ syntax="proto2";
 package dpl;
 
 
-message FullyConnected
+message FullyConnected                      // layer name
 {
-    required int32 numoutputneurons=1;
-    optional string name=2;
+    required int32  numoutputneurons=1;     // required - layer parameters
+      
+    optional int32  numinputneurons=2;      // optional - layer parameters
+    optional string name=3;       
+}
+
+message VectorAddition                      // layer name
+{
+    required int32 numinputsvectors=4;      // required - layer parameters
+
+    repeated string name=3;                 // optional - layer parameters
+}
+
+
+message BlobProto
+{
+  optional int32 num = 1 [default = 0];
+  optional int32 channels = 2 [default = 0];
+  optional int32 height = 3 [default = 0];
+  optional int32 width = 4 [default = 0];
+  repeated float data = 5 [packed=true];
+  repeated float diff = 6 [packed=true];
 }
