@@ -5,6 +5,6 @@ package dpl;
 
 message FullyConnected
 {
-    required int32 numOutputNeurons=1;
+    required int32 numoutputneurons=1;
     optional string name=2;
 }
