@@ -295,35 +295,35 @@ namespace dpl {
 }  // namespace dpl
 
 
-int main()
-{
-    int N=10;
-    double ar1[N] = {0.0};
-    double ar2[N] = {0.0};
-    double ar3[N] = {0.0};
+//int main()
+//{
+    //int N=10;
+    //double ar1[N] = {0.0};
+    //double ar2[N] = {0.0};
+    //double ar3[N] = {0.0};
 
-    // fill the array
-    for(int i=0; i<N ; i++)
-    {
-        ar1[i] = i;
-        ar2[i] = i+1;
-    }
+    //// fill the array
+    //for(int i=0; i<N ; i++)
+    //{
+        //ar1[i] = i;
+        //ar2[i] = i+1;
+    //}
 
-    // find dot prooduct
-    std::cout <<  dpl::dpl_cpu_dot(N, ar1, ar2) << std::endl;
+    //// find dot prooduct
+    //std::cout <<  dpl::dpl_cpu_dot(N, ar1, ar2) << std::endl;
 
-    // find square of a vector
-    dpl::dpl_powx(N, ar1, 1/2.0, ar3);
-    for(int i=0; i<N; i++)
-        std::cout << ar3[i] << std::endl;
-
-
-    // take square of the vector
-    dpl::dpl_sqr(N, ar3);
-    for(int i=0; i<N; i++)
-        std::cout << ar3[i] << std::endl;
+    //// find square of a vector
+    //dpl::dpl_powx(N, ar1, 1/2.0, ar3);
+    //for(int i=0; i<N; i++)
+        //std::cout << ar3[i] << std::endl;
 
 
+    //// take square of the vector
+    //dpl::dpl_sqr(N, ar3);
+    //for(int i=0; i<N; i++)
+        //std::cout << ar3[i] << std::endl;
 
-    return 1;
-}
+
+
+    //return 1;
+//}
