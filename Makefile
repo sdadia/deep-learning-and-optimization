@@ -2,31 +2,56 @@
 ############################### SETUP #########################################
 
 
+# which compiler to use - default is g++
 COMPILER = g++
-ifeq ($(COMPILER), clang++)
-	COMPILER_FLAGS += -std=c++1z # c++17 standard - if clang
-else
+ifeq ($(COMPILER), g++)
 	COMPILER_FLAGS += -std=c++14
+else
+	COMPILER_FLAGS += -std=c++1z # c++17 standard - if clang
 endif
 
-# Set compilation type to DEBUG OR RELEASE
+# Set build type - default is DEBUG
 # in DEBUG, no optimization and debig flags are set
 # In RELASE, O3 optimization is set
 BUILD_TYPE=DEBUG
+ifeq ($(BUILD_TYPE), DEBUG)
+$(info "DEBUG Mode")
+	COMPILER_FLAGS += -Wall -O0 -ggdb -pg
+else
+$(info "RELEASE Mode")
+	COMPILER_FLAGS += -O3 -msse3 -funroll-loops --fast-math
+endif
+
+NO_COLOR="\033[0m"
+OK_COLOR="\033[32;01m"
+ERROR_COLOR="\033[31;01m"
+WARN_COLOR="\033[33;01m"
+ 
+OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
+ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
+WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
 
 
 
 
-############################# INPUTS  #########################################
 
+############################# INPUT SETTING ##################################
+
+# location of source files
 SRC_DIR += ./src
+
+# location of test files
+TEST_SRC_DIR += ./test
 
 INCLUDE_DIR += -I ./include -I /usr/local/include/xtensor-blas/flens/
 
 LDFLAGS += -lgtest -lgmock -lglog -lpthread -lblas
 
 
-############################# OUTPUTS #########################################
+
+
+
+############################# OUTPUTS SETTING #################################
 
 BIN_DIR += ./build/bin
 LIB_DIR += ./build/lib
@@ -37,63 +62,74 @@ $(shell mkdir -p $(LIB_DIR) $(BIN_DIR) $(DOCS_DIR))
 
 
 
+
+############################# FILE SETTING #################################
+
+TEST_CPP_FILES = $(wildcard $(TEST_SRC_DIR)/*.cpp)
+TEST_OBJ_FILES = $(subst $(TEST_SRC_DIR)/, $(BIN_DIR)/, $(patsubst %.cpp,%.o, $(TEST_CPP_FILES)))
+TEST_EXECUTIBLE_FILES = $(subst $(TEST_SRC_DIR)/, $(BIN_DIR)/, $(patsubst %.cpp,%, $(TEST_CPP_FILES)))
+
+
+SRC_CPP_FILES = $(wildcard $(SRC_DIR)/*.cpp)
+SRC_OBJ_FILES = $(subst $(SRC_DIR)/, $(BIN_DIR)/, $(patsubst %.cpp, %.o, $(SRC_CPP_FILES)))
+SRC_EXEC_FILES = $(subst $(SRC_DIR)/, $(BIN_DIR)/, $(patsubst %.cpp,%, $(SRC_CPP_FILES)))
+
+LIBRARY_NAME = libdplo.a
+
+
+
+
+
 ############################# TARGETS TO CREATE ###############################
 
-# creates the main library
-all : libdpl.a
+# creates everything
+all : lib test
 
-# creates test -  it depends on above libdpl.a library
-test : test_sigmoid_layer test_crossentropyloss_layer
+# main Library
+lib : $(LIB_DIR)/$(LIBRARY_NAME)
+
+# creates test -  it depends on above $(LIBRARY_NAME) library
+test : $(TEST_EXECUTIBLE_FILES)
 
 # creates Documentation
-docs : Doxy
+docs : DOXY
+
+DOXY:
+	@doxygen Doxyfile
+	ln -sf ./docs/html/index.html ./documentation.html
 
 # Remove all the above
-clean : Clean
+clean:
+	rm -fr ./build/ ./docs/ ./*.o ./*.html
+
 
 ############################### INSTRUCTIONS ##################################
 
+# target : requirement_1, requirement_2, requirement_3 ....
+#   commands
+# $? means all requirement - here target is made only if requirement changes
+# $^ means all the requirements of the target
+# $< means requirement_1
+# $@ means the target name
 
 
-libdpl.a : math_functions.o sigmoid_layer.o common.o crossentropyloss_layer.o
-	ar -cvq $(LIB_DIR)/libdpl.a math_functions.o sigmoid_layer.o common.o crossentropyloss_layer.o
-	$(eval LDFLAGS += $(LIB_DIR)/libdpl.a) 
-
-common.o : $(SRC_DIR)/common.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -c $(SRC_DIR)/common.cpp  $(INCLUDE_DIR)  $(LDFLAGS)
-
-math_functions.o : $(SRC_DIR)/math_functions.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -c $(SRC_DIR)/math_functions.cpp  $(INCLUDE_DIR)  $(LDFLAGS)
+# Compiling source code to create library
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp 
+	@printf "Building :  %-50s\t\t\t" $@
+	g++ -c  $< -o $@ $(INCLUDE_DIR) $(LDFLAGS) $(COMPILER_FLAGS)
+	@echo $(OK_STRING)
 
 
-crossentropyloss_layer.o : $(SRC_DIR)/crossentropyloss_layer.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -c $(SRC_DIR)/crossentropyloss_layer.cpp  $(INCLUDE_DIR)  $(LDFLAGS)
+# Compiling test source code to create tests
+$(BIN_DIR)/%: $(TEST_SRC_DIR)/%.cpp  $(LIB_DIR)/$(LIBRARY_NAME)
+	@printf "Building :  %-50s\t\t\t" $@
+	g++  $< -o $@ $(INCLUDE_DIR) $(LDFLAGS) $(COMPILER_FLAGS) $(LIB_DIR)/$(LIBRARY_NAME)
+	@echo $(OK_STRING)
 
-
-sigmoid_layer.o : $(SRC_DIR)/sigmoid_layer.cpp
-	$(COMPILER) $(COMPILER_FLAGS) -c $(SRC_DIR)/sigmoid_layer.cpp  $(INCLUDE_DIR)  $(LDFLAGS)
-
-
-test_sigmoid_layer : $(SRC_DIR)/test_sigmoid_layer.cpp all
-	$(COMPILER) $(COMPILER_FLAGS) -o $(BIN_DIR)/test_sigmoid_layer $(SRC_DIR)/test_sigmoid_layer.cpp  $(INCLUDE_DIR)  $(LDFLAGS) 
-
-
-test_crossentropyloss_layer : $(SRC_DIR)/test_crossentropyloss_layer.cpp all
-	$(COMPILER) $(COMPILER_FLAGS) -o $(BIN_DIR)/test_crossentropyloss_layer $(SRC_DIR)/test_crossentropyloss_layer.cpp  $(INCLUDE_DIR)  $(LDFLAGS)
-
-
-Clean:
-	rm -r ./build/ ./docs/ ./*.o
-
-Doxy:
-	@doxygen Doxyfile
-
-
-
-
-
-
-
-
-
-
+# Create static archive from src files and NOT test files
+$(LIB_DIR)/$(LIBRARY_NAME) : $(SRC_OBJ_FILES)
+	@printf "\n\nBuilding :  %-50s\t\t\t" $@
+	ar -cq $@ $?
+	$(eval LDFLAGS += $@)
+	@echo $(OK_STRING) 
+	@printf "\n\n"
