@@ -1,6 +1,4 @@
-<p align="center"> 
-![DPLO](.dpl_logo.png)
-</p>
+![DPLO](.dpl_logo.png?raw=true "Deep Learning & Optimization")
 
 ## Dependencies
 
