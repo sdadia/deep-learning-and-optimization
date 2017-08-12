@@ -42,7 +42,59 @@
 This will create static library in **build/lib** & executibles in **build/bin/**
 
 <!--```-->
-    mkdir -p build/bin build/lib
-    make all test doxy
+    make all -j4 -s -O      # to make static library and test executible
+    make docs               # to create documentation
+
+    make clean # to remove all the above
 <!--```-->
 
+
+## Create new layer
+Just create a new .hpp and .cpp file with the corresponding layer name
+* implement setUp(), forward(), backward() functions
+
+**sigmoid.hpp**
+<!--```-->
+    #include "common.hpp"
+
+    namespace dpl
+    {
+        class MySigmoidLayer
+        {
+            void setUp(std::vector<ftensor_t> inputs);
+
+            void forward();
+
+            void backward(std::vector<ftensor_t> grad_from_top);
+        }
+    }
+
+<!--```-->
+
+
+
+**sigmoid.cpp**
+<!--```-->
+    #include "common.hpp"
+    #include "sigmoid.hpp"
+
+    namespace dpl
+    {
+        void MySigmoidLayer::setUp(std::vector<ftensor_t> inputs)
+        {
+            // code here
+        }
+
+        void MySigmoidLayer::forward()
+        {
+            // forward prop code here
+        }   
+
+        void MySigmoidLayer::backward(std::vector<ftensor_t> grad_from_top)
+        {
+            // back prop code here
+        }
+        
+    }
+
+<!--```-->

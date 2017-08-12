@@ -43,9 +43,9 @@ SRC_DIR += ./src
 # location of test files
 TEST_SRC_DIR += ./test
 
-INCLUDE_DIR += -I ./include -I /usr/local/include/xtensor-blas/flens/
+INCLUDE_DIR += -I ./include -I /usr/local/include/xtensor-blas/flens/ -I /home/sahil/Documents/programs/timepass/include/
+LDFLAGS += -fopenmp -lgtest -lgmock -lglog -lpthread -lblas -L /home/sahil/Documents/programs/timepass/generated_static_libs -lrandom_helper
 
-LDFLAGS += -lgtest -lgmock -lglog -lpthread -lblas
 
 
 
@@ -87,9 +87,12 @@ all : lib test
 
 # main Library
 lib : $(LIB_DIR)/$(LIBRARY_NAME)
+#ls ./include/*.hpp | sed -r 's/^.+\///' >> dpl.hpp
 
 # creates test -  it depends on above $(LIBRARY_NAME) library
 test : $(TEST_EXECUTIBLE_FILES)
+	rm -rf ./run_test.sh
+	ls $(BIN_DIR)/test* > ./run_test.sh
 
 # creates Documentation
 docs : DOXY
@@ -100,7 +103,7 @@ DOXY:
 
 # Remove all the above
 clean:
-	rm -fr ./build/ ./docs/ ./*.o ./*.html
+	rm -fr ./build/ ./docs/ ./*.o ./*.html ./*.out ./run_test.sh
 
 
 ############################### INSTRUCTIONS ##################################
@@ -121,7 +124,7 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 # Compiling test source code to create tests
-$(BIN_DIR)/%: $(TEST_SRC_DIR)/%.cpp  $(LIB_DIR)/$(LIBRARY_NAME)
+$(BIN_DIR)/%: $(TEST_SRC_DIR)/%.cpp  lib
 	@printf "Building :  %-50s\t\t\t" $@
 	g++  $< -o $@ $(INCLUDE_DIR) $(LDFLAGS) $(COMPILER_FLAGS) $(LIB_DIR)/$(LIBRARY_NAME)
 	@echo $(OK_STRING)
