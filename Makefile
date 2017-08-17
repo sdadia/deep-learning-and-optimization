@@ -124,13 +124,14 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 # Compiling test source code to create tests
-$(BIN_DIR)/%: $(TEST_SRC_DIR)/%.cpp  lib
+$(BIN_DIR)/%: $(TEST_SRC_DIR)/%.cpp  $(LIB_DIR)/$(LIBRARY_NAME)
 	@printf "Building :  %-50s\t\t\t" $@
 	g++  $< -o $@ $(INCLUDE_DIR) $(LDFLAGS) $(COMPILER_FLAGS) $(LIB_DIR)/$(LIBRARY_NAME)
 	@echo $(OK_STRING)
 
-# Create static archive from src files and NOT test files
-$(LIB_DIR)/$(LIBRARY_NAME) : $(SRC_OBJ_FILES)
+# Create static archive from src files and NOT test files - it also needs to
+# bre remade whenever there is a new change in the CPP files
+$(LIB_DIR)/$(LIBRARY_NAME) : $(SRC_OBJ_FILES) $(SRC_CPP_FILES)
 	@printf "\n\nBuilding :  %-50s\t\t\t" $@
 	ar -cq $@ $?
 	$(eval LDFLAGS += $@)
